@@ -2,16 +2,15 @@ require 'openssl'
 require 'open-uri'
 
 class ScreenshotsCloud
-	def initialize(apiKey, apiSecret)
-	  @apiKey = apiKey
-	  @apiSecret = apiSecret
-    end
+  def initialize(apiKey, apiSecret)
+    @apiKey = apiKey
+    @apiSecret = apiSecret
+  end
 
-	def screenshotUrl(options={})
-	  parameters = options.map {|option| option.map {|value| URI.escape(value.to_s, Regexp.new("[^#{URI::PATTERN::UNRESERVED}]")) }.join('=') }.join('&')
+  def screenshot_url(options={})
+    parameters = URI.encode_www_form(options)
+    token = OpenSSL::HMAC.hexdigest('sha1', @apiSecret, parameters)
 
-	  token = OpenSSL::HMAC.hexdigest('sha1', @apiSecret, parameters)
-
-	  "https://api.screenshots.cloud/v1/screenshot/#{@apiKey}/#{token}?#{parameters}"
-	end
+    "https://api.screenshots.cloud/v1/screenshot/#{@apiKey}/#{token}?#{parameters}"
+  end
 end

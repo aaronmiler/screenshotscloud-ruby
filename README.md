@@ -28,7 +28,7 @@ from screenshotscloud import ScreenshotsCloud
 
 screenshotscloud = ScreenshotsCloud.new('SCREENSHOTSCLOUD_KEY', 'SCREENSHOTSCLOUD_SECRET')
 
-screenshotUrl = screenshotscloud.screenshotUrl({
+screenshot_url = screenshotscloud.screenshot_url({
 	"url": "bbc.com/news",
 	"width": 800
 })
